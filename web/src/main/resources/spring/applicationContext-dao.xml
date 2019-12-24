@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
     <!-- 配置 注解扫描-->
@@ -46,8 +46,8 @@
             </list>
         </property>
 
-        <!-- 制定 mybatis 主要配置文件-->
-        <!--<property name="configuration" value="classpath:mybatis/mybatis-config.xml"></property>-->
+        <!-- 指定 mybatis 主要配置文件-->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
     </bean>
 
 
@@ -60,9 +60,11 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"></property>
     </bean>
 
-    <!-- 5、-->
+    <!-- 5、配置 事务管理器-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <!-- 注入 数据库 连接池-->
         <property name="dataSource" ref="dataSource"></property>
     </bean>
+    <!-- 开启注解事务=============== -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>
