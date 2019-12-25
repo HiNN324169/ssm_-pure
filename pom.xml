@@ -24,7 +24,8 @@
         <jackson.version>2.8.9</jackson.version>
 
         <!-- 分页助手 版本-->
-        <pagehelper.version>5.1.2</pagehelper.version>
+        <pagehelper.version>4.0.0</pagehelper.version>
+        <!--<pagehelper.version>5.1.2</pagehelper.version>-->
 
         <!-- 代理 版本-->
         <cglib.version>3.2.2</cglib.version>

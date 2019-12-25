@@ -120,3 +120,81 @@ logger.info(...);
 logger.debug(...);
 ```
 
+
+#### 2、pageHelper 分页插件
+
+- 第一步：添加 maven依赖
+```$xslt
+<!--  分页助手 -->
+<dependency>
+    <groupId>com.github.pagehelper</groupId>
+    <artifactId>pagehelper</artifactId>
+    <version>${pagehelper.version}</version>
+</dependency>
+<!-- 分页助手 -->
+```
+
+
+- 第二步 配置 pageHelper 插件：版本 不同配置也不一样
+  - v ：4.0.0
+    - 在 spring 配置文件 SQLSessionFactoryBean 中添加 pageHelper 插件
+```$xslt
+<!-- 3、读取 书写 sql 语句 的 xml 文件的位置：SQLSessionFactoryBean-->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入数据源 -->
+        <property name="dataSource" ref="dataSource"></property>
+
+        <!-- 制定mapper 映射文件的存放位置-->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapping/*.xml</value>
+            </list>
+        </property>
+
+        <!-- 指定 mybatis 主要配置文件-->
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
+
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+```
+  - v : 5.1.2
+    - 在 mybatis-config.xml 中配置
+```
+<!-- 分页插件 -->
+<!--<plugins>-->
+    <!--<plugin interceptor="com.github.pagehelper.PageInterceptor">-->
+        <!--&lt;!&ndash; 该参数默认为false-->
+        <!--设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用-->
+        <!--和startPage中的pageNum效果一样 &ndash;&gt;-->
+        <!--<property name="offsetAsPageNum" value="true"/>-->
+        <!--&lt;!&ndash; 该参数默认为false-->
+        <!--设置为true是，使用RowBounds分页会进行count查询 &ndash;&gt;-->
+        <!--<property name="rowBoundsWithCount" value="true"/>-->
+        <!--&lt;!&ndash; 设置为true时，如果pageSize=0或者ROwRounds.limit=0就会查询出全部的结果-->
+        <!--（相当于每一偶执行分页查询，但是返回结果仍然是page类型） &ndash;&gt;-->
+        <!--<property name="pageSizeZero" value="true"/>-->
+
+        <!--&lt;!&ndash; 设置数据库类型&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="dialect" value="mysql"></property>&ndash;&gt;-->
+    <!--</plugin>-->
+<!--</plugins>-->
+```
+
+- 第三部：使用 pageHelper
+```$xslt
+// 参数一：需要查询的页（底层公式：（当前页 - 1）* 每页记录数）
+// 参数二：每页记录数
+Page<Object> startPage = PageHelper.startPage(pageIndex, 2);
+
+// 注意：pageHelper 的调用 必须放在 数据库查询之前
+```
