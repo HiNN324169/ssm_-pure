@@ -44,7 +44,7 @@
         <c3p0.version>0.9.1.2</c3p0.version>
 
         <!-- Junit-->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
 
         <!-- 文件上传-->
         <!-- fileupload-->
