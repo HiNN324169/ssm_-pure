@@ -50,7 +50,7 @@
         <!-- fileupload-->
         <fileupload.version>1.3.3</fileupload.version>
         <!-- commons-io-->
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <!-- 文件上传-->
 
         <!-- JSR-303 数据校验-->
